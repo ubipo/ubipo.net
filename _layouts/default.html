@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+<<<<<<< HEAD
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title }}</title>
@@ -19,6 +20,29 @@
   <div id="content">
     {{ content }}
   </div>
+=======
+  <title>{{ page.title }} - {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ 'css/style.css' | relative_url }}">
+</head>
+<body>
+
+
+<div id="header">
+  <span class='big'>{{ site.title }}</span>
+  <span class='small'>{{ site.subtitle }}</span>
+</div>
+
+<div id="nav">
+  <a href="{{ 'index.html' | relative_url }}">Welcome</a> •
+  <a href="{{ 'two.html'   | relative_url }}">Page Two</a> •
+  <a href="{{ 'three.html' | relative_url }}">Page Three</a> •
+  <a href="http://groups.google.com/group/wwwmake">Questions? Comments?</a> •
+  <a href="https://github.com/henrythemes/jekyll-starter-theme">About</a>
+</div>
+
+<div id="content">
+  {{ content }}
+>>>>>>> 9587cec20dcf580cc09b29300918cfc5e79a6935
 </div>
 
 </body>
