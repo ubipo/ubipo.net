@@ -2,35 +2,8 @@
 layout: default
 title:  DSpay
 ---
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha256-DHF4zGyjT7GOMPBwpeehwoey18z8uiz98G4PRu2lV0A=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha256-4hqlsNP9KM6+2eA8VUT0kk4RsMRTeS7QGHIM+MZ5sLY=" crossorigin="anonymous" />
-
-<style type="text/css">
-	.slick-prev {
-	    left: 10px;
-	    width: 30px;
-	    height: 30px;
-	    z-index: 1;
-	}
-	.slick-next {
-	    right: 10px;
-	    width: 30px;
-	    height: 30px;
-	}
-	.slick-prev::before {
-	    color: #55868C;
-	    font-size: 30px;
-	}
-	.slick-next::before {
-	    color: #55868C;
-	    font-size: 30px;
-	}
-</style>
-
-
+{% include jquery.html %}
+{% include slick.html %}
 
 <h2> {{ page.title }} </h2>
 
@@ -43,12 +16,12 @@ title:  DSpay
   <img src="media/dspay/account.png">
 </div>
 
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('.carousel').slick({
-      	autoplay: true,
-      	autoplaySpeed: 5000,
-      	speed: 900
-      });
-    });
-  </script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.carousel').slick({
+  	autoplay: true,
+  	autoplaySpeed: 5000,
+  	speed: 900
+  });
+});
+</script>
