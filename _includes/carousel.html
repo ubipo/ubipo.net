@@ -1,0 +1,15 @@
+<div id="{{include.id}}">
+    {% for image in include.images %}
+        <img src="{{image}}">
+    {% endfor %}
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#{{include.id}}').slick({
+            autoplay: true,
+            autoplaySpeed: 5000,
+            speed: 900
+        });
+    });
+</script>
