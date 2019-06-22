@@ -1,0 +1,259 @@
+<html>
+<head>
+  <title></title>
+  <meta content="">
+  <meta charset="UTF-8"> 
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .contentCont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(0, 0%, 20%);
+    /* background: hsl(0, 0%, 60%);
+    background: radial-gradient(ellipse at center, hsl(0, 0%, 60%) 0%,hsl(0, 0%, 0%) 100%); */
+  }
+
+  .contentWrapper {
+    max-width: 200rem;
+    position: relative;
+  }
+
+  .grid__overview {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+    /* align-content: stretch; */
+    /* align-items: stretch; */
+    position: relative;
+  }
+
+  .grid__overview__item {
+    min-width: 20rem;
+    min-height: 20rem;
+    /* padding-top: 20%; */
+  }
+
+  .grid__overview__item--s1 {
+    min-width: 30rem;
+  }
+
+  .grid__details {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .grid__details__item {
+    pointer-events: auto;
+    position: absolute;
+    display: none;
+  }
+
+  @keyframes aSelect-keyframes {
+    from {
+      opacity: 1;
+    } to {
+      opacity: 0.8;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .aSelect {
+    animation-name: aSelect-keyframes;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+  .aDeSelect {
+    animation-name: aSelect-keyframes;
+    animation-duration: 0.5s;
+    animation-direction: reverse;
+    animation-fill-mode: backwards;
+  }
+
+  @keyframes aGrayout-keyframes {
+    from {
+      filter: grayscale(0%);
+    } to {
+      filter: grayscale(100%);
+    }
+  }
+
+  .aGrayout {
+    animation-name: aGrayout-keyframes;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+  .aDeGrayout {
+    animation-name: aGrayout-keyframes;
+    animation-duration: 0.5s;
+    animation-direction: reverse;
+    animation-fill-mode: backwards;
+  }
+
+</style>
+<script type="text/javascript">
+
+/* From Modernizr */
+function whichTransitionEvent(){
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+      'transition':'transitionend',
+      'OTransition':'oTransitionEnd',
+      'MozTransition':'transitionend',
+      'WebkitTransition':'webkitTransitionEnd'
+    }
+
+    for(t in transitions){
+        if( el.style[t] !== undefined ){
+            return transitions[t];
+        }
+    }
+}
+
+/* Listen for a transition! */
+var transitionEvent = whichTransitionEvent();
+
+  var tiles = [
+    {
+      color: "#0b5563",
+      name: "a",
+      size: 0
+    },
+    {
+      color: "#417b5a",
+      name: "b",
+      size: 1
+    },
+    {
+      color: "#13293d",
+      name: "c",
+      size: 0
+    },
+    {
+      color: "#eca400",
+      name: "d",
+      size: 0
+    },
+    {
+      color: "#546a7b",
+      name: "e",
+      size: 0
+    },
+    {
+      color: "#69140e",
+      name: "f",
+      size: 0
+    }
+  ]
+
+  window.addEventListener("load", e => {
+    var eOverview = document.querySelector(".grid__overview");
+    var eDetails = document.querySelector(".grid__details");
+
+    for (let i = 0; i < tiles.length; i++) {
+      let tile = tiles[i];
+
+      // Create overview tile elem
+      let eOverviewTile = document.createElement("div");
+      eOverviewTile.style["background-color"] = tile.color;
+      eOverviewTile.textContent = tile.name;
+      eOverviewTile.classList.add("grid__overview__item");
+      eOverviewTile.classList.add(`grid__overview__item--s${String(tile.size)}`);
+      eOverview.appendChild(eOverviewTile);
+
+      // Create detail tile elem
+      let eDetailTile = document.createElement("div");
+      eDetailTile.style["background-color"] = tile.color;
+      eOverviewTile.classList.add("grid__detail__item");
+      eDetails.appendChild(eDetailTile);
+
+      // Add listeners
+      eOverviewTile.addEventListener("click", e => {
+        var boundingRect = eOverviewTile.getBoundingClientRect();
+        var w = boundingRect.right - boundingRect.left;
+        var h = boundingRect.bottom - boundingRect.top;
+        var top = eOverviewTile.offsetTop;
+        var left = eOverviewTile.offsetLeft;
+        eDetailTile.style["top"] = top;
+        eDetailTile.style["left"] = left;
+        eDetailTile.style["width"] = String(w + "px");
+        eDetailTile.style["height"] = String(h + "px");
+        eDetailTile.style["display"] = "block";
+        eOverviewTile.style["visibility"] = "hidden";
+        eDetailTile.classList.remove("aDeSelect");
+        void eDetailTile.offsetWidth;
+        eDetailTile.classList.add("aSelect");
+      });
+
+      eDetailTile.addEventListener("click", e => {
+        eDetailTile.setAttribute('hide-after-animation', '');
+        eDetailTile.classList.remove("aSelect");
+        void eDetailTile.offsetWidth;
+        eDetailTile.classList.add("aDeSelect");
+      });
+
+      eDetailTile.addEventListener('animationend', e => {
+        if (eDetailTile.hasAttribute('hide-after-animation')) {
+          eDetailTile.removeAttribute('hide-after-animation');
+          eOverviewTile.style["visibility"] = "visible";
+          eDetailTile.style['display'] = 'none';
+        }
+      }, false);
+    }
+  });
+
+
+
+  // .forEach(e => e.addEventListener("click", e => {
+  //   var tile = e.target;
+  //   var detail = document.querySelector("#a-detail");
+  //   var rect = tile.getBoundingClientRect();
+  //   var w = rect.right - rect.left;
+  //   var h = rect.bottom - rect.top;
+  //   detail.style["top"] = rect.top;
+  //   detail.style["left"] = rect.left;
+  //   detail.style["width"] = String(w + "px");
+  //   detail.style["height"] = String(h + "px");
+  //   detail.style["display"] = "block";
+  //   detail.classList.add("select-animation");
+  //   // console.log(rect.top, rect.right, rect.bottom, rect.left);
+  //   // e.preventDefault;
+  //   // e.target.classList.remove("select-animation");
+  //   // void e.target.offsetWidth;
+  //   // e.target.classList.add("select-animation");
+  // });
+</script>
+
+</head>
+
+<body>
+  <div class="contentCont">
+    <div class="grid">
+      <section class="grid__overview"></section>
+      <section class="grid__details"></section>
+    </div>
+  </div>
+</body>
+
+</html>
